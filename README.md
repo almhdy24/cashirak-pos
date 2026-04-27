@@ -1,28 +1,87 @@
-CASHIRAK POS - Installation & User Guide
-=========================================
+# 🧾 Cashirak POS
 
-📦 SYSTEM REQUIREMENTS
-- Windows 7/10/11, Linux, or macOS
-- PHP 7.4+ with SQLite3 extension enabled
-- A modern web browser (Chrome, Firefox, Edge)
+## 💡 Simple Offline Cashier System
 
-🚀 QUICK START (WINDOWS)
-------------------------
-1. Download a portable PHP build for Windows from:
-   https://windows.php.net/download#php-8.4
-   (Choose "Non Thread Safe" Zip package)
+Cashirak POS is a fast and simple point-of-sale system designed for small restaurants, cafés, and shops.
 
-2. Extract the PHP zip contents into the "php" folder located next to this file.
+It runs on **one device only** and does not require internet.
 
-3. Double-click "start.bat" to launch the built-in PHP server.
+---
 
-4. Open a terminal (Command Prompt) in the project folder and run the installer:
-   php install-cli.php
+## 🎯 What this system does
 
-   This creates the database and default users automatically.
+- Take customer orders quickly
+- Print and manage receipts
+- Track daily sales
+- Manage cashier shifts
+- Organize menu items
+- Cancel or edit orders when needed
 
-5. Open your browser and log in at:
-   http://localhost:8000/login.php
+---
+
+## ⚡ Key Benefits
+
+✔ Works without internet  
+✔ Very fast and lightweight  
+✔ Easy to use (no training needed)  
+✔ Arabic-friendly interface  
+✔ Built for single cashier usage  
+✔ Works on any basic computer  
+
+---
+
+## 🖥️ How to Run
+
+### 1. Start the system
+Run the server:
+
+php -S localhost:8000 -t public
+
+---
+
+### 2. Open in browser
+
+http://localhost:8000
+
+---
+
+## 👤 Default Login
+
+Username: admin  
+Password: admin
+
+---
+
+## 🏪 Who is this for?
+
+- Small restaurants  
+- Cafés  
+- Food kiosks  
+- Small shops  
+- Personal business use  
+
+---
+
+## 📌 Important Notes
+
+- This system is designed for **one device only**
+- No internet required
+- All data is stored locally on the same machine
+
+---
+
+## 👨‍💻 Developer
+
+Built by **Elmahdi Dev**  
+GitHub: https://github.com/almhdy24
+
+---
+
+## 🚀 Status
+
+✔ Ready to use  
+✔ Stable version  
+✔ Offline-first design   http://localhost:8000/login.php
    Default credentials:
       Admin   : admin / admin123
       Cashier : cashier / cashier123
