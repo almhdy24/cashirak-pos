@@ -1,17 +1,49 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6c63ff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#3f3d9e;stop-opacity:1" />
+    <linearGradient id="iconBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0c1a3a"/>
     </linearGradient>
   </defs>
-  <rect x="4" y="14" width="32" height="32" rx="4" fill="url(#grad)" />
-  <rect x="8" y="18" width="24" height="16" rx="2" fill="#fff" opacity="0.9" />
-  <rect x="12" y="22" width="8" height="4" rx="1" fill="#6c63ff" />
-  <rect x="22" y="22" width="6" height="4" rx="1" fill="#6c63ff" />
-  <circle cx="20" cy="32" r="4" fill="#6c63ff" />
-  <path d="M8 40 L10 48 L30 48 L32 40 Z" fill="#fff" opacity="0.8" />
-  <rect x="32" y="42" width="4" height="6" rx="2" fill="#fff" opacity="0.6" />
-  <text x="48" y="38" font-family="'Segoe UI', 'Tahoma', sans-serif" font-size="28" font-weight="700" fill="#1a1a2e">كاشيراك</text>
-  <text x="48" y="52" font-family="'Segoe UI', 'Tahoma', sans-serif" font-size="12" font-weight="600" fill="#6c63ff" letter-spacing="2">POS</text>
+
+  <!-- Icon mark — rounded square matching app icon -->
+  <rect x="2" y="2" width="52" height="52" rx="12" fill="url(#iconBg)"/>
+
+  <!-- Monitor body -->
+  <rect x="8" y="10" width="40" height="28" rx="3" fill="#ffffff" opacity="0.95"/>
+
+  <!-- Monitor screen -->
+  <rect x="11" y="13" width="34" height="21" rx="2" fill="url(#screen)"/>
+
+  <!-- Screen accent line -->
+  <rect x="11" y="13" width="34" height="2" rx="1" fill="#3b82f6" opacity="0.8"/>
+
+  <!-- Receipt lines on screen -->
+  <line x1="16" y1="19" x2="40" y2="19" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="23" x2="34" y2="23" stroke="#93c5fd" stroke-width="1"   stroke-linecap="round"/>
+  <line x1="16" y1="27" x2="36" y2="27" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Monitor stand -->
+  <rect x="25" y="38" width="8" height="4"  rx="1" fill="#dbeafe" opacity="0.9"/>
+  <rect x="19" y="42" width="20" height="3" rx="1" fill="#bfdbfe" opacity="0.9"/>
+
+  <!-- Keyboard strip -->
+  <rect x="10" y="46" width="36" height="6" rx="2" fill="#dbeafe" opacity="0.85"/>
+  <rect x="13" y="48" width="4"  height="2" rx="1" fill="#93c5fd"/>
+  <rect x="19" y="48" width="4"  height="2" rx="1" fill="#93c5fd"/>
+  <rect x="25" y="48" width="9"  height="2" rx="1" fill="#93c5fd"/>
+  <rect x="36" y="48" width="4"  height="2" rx="1" fill="#93c5fd"/>
+
+  <!-- LED dot -->
+  <circle cx="47" cy="36" r="2" fill="#34d399" opacity="0.9"/>
+
+  <!-- App name -->
+  <text x="64" y="36" font-family="'Segoe UI','Tahoma',Arial,sans-serif"
+        font-size="26" font-weight="700" fill="#1e40af">كاشيراك</text>
+  <text x="65" y="50" font-family="'Segoe UI','Tahoma',Arial,sans-serif"
+        font-size="11" font-weight="600" fill="#2563eb" letter-spacing="3">POS</text>
 </svg>
