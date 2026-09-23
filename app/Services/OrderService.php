@@ -3,13 +3,14 @@ namespace Services;
 
 use Repositories\OrderRepository;
 use Core\DB;
-use Models\Order;
 
 class OrderService {
+    // Process incoming order
     public static function processOrder($orderData, $shift_id, $cashier_id) {
         return OrderRepository::createWithItems($orderData, $shift_id, $cashier_id);
     }
-
+    
+    // Cancel order (admin only)
     public static function cancelOrder($order_id, $cashier_id) {
         $db = DB::conn();
         $db->beginTransaction();
@@ -18,15 +19,18 @@ class OrderService {
             $stmt->execute([$order_id]);
             $order = $stmt->fetch(\PDO::FETCH_ASSOC);
             if (!$order) {
-                throw new \Exception("الطلب غير موجود أو ملغي مسبقاً");
+                throw new \Exception("Order not found or already cancelled");
             }
-
+            
             $stmt = $db->prepare("UPDATE orders SET status = 'cancelled', cancelled_at = datetime('now','localtime') WHERE id = ?");
             $stmt->execute([$order_id]);
-
-            $stmt = $db->prepare("INSERT INTO audit_logs (action, user_id, entity_id, details, created_at) VALUES (?, ?, ?, ?, datetime('now','localtime'))");
+            
+            $stmt = $db->prepare("
+                INSERT INTO audit_logs (action, user_id, entity_id, details, created_at) 
+                VALUES (?, ?, ?, ?, datetime('now','localtime'))
+            ");
             $stmt->execute(['order_cancelled', $cashier_id, $order_id, json_encode(['previous_total' => $order['total']])]);
-
+            
             $db->commit();
             return true;
         } catch (\Exception $e) {

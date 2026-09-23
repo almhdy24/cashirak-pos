@@ -5,7 +5,7 @@ class Session {
     public static function start() {
         if (session_status() === PHP_SESSION_NONE) {
             // مسار مخصص لحفظ الجلسات داخل المشروع (يعمل على Termux)
-            $sessionPath = __DIR__ . '/../../storage/sessions';
+            $sessionPath = defined('STORAGE_PATH') ? STORAGE_PATH . '/sessions' : __DIR__ . '/../../storage/sessions';
             if (!is_dir($sessionPath)) {
                 mkdir($sessionPath, 0777, true);
             }

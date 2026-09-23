@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="55" height="58" viewBox="0 0 55 58">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e3a5f"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="55" height="58" fill="url(#bg)"/>
+
+  <!-- Top accent strip -->
+  <rect x="0" y="0" width="55" height="2" fill="#2563eb"/>
+
+  <!-- POS terminal icon, centered -->
+  <g transform="translate(27.5,26)">
+    <!-- Monitor body -->
+    <rect x="-17" y="-15" width="34" height="25" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <!-- Screen -->
+    <rect x="-14" y="-12" width="28" height="19" rx="2" fill="#1d4ed8" opacity="0.85"/>
+    <!-- Receipt lines on screen -->
+    <line x1="-9" y1="-7" x2="9"  y2="-7" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="-9" y1="-3" x2="5"  y2="-3" stroke="#93c5fd" stroke-width="1"   stroke-linecap="round"/>
+    <line x1="-9" y1="1"  x2="7"  y2="1"  stroke="#93c5fd" stroke-width="1"   stroke-linecap="round"/>
+    <line x1="-9" y1="5"  x2="9"  y2="5"  stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Stand -->
+    <rect x="-3" y="10" width="6" height="4" rx="1" fill="#334155"/>
+    <rect x="-8" y="14" width="16" height="2" rx="1" fill="#334155"/>
+  </g>
+
+  <!-- App name -->
+  <text x="27.5" y="50" text-anchor="middle" font-family="Segoe UI,Tahoma,Arial,sans-serif"
+        font-size="7.5" font-weight="700" fill="#ffffff">كاشيراك</text>
+  <text x="27.5" y="57" text-anchor="middle" font-family="Segoe UI,Tahoma,Arial,sans-serif"
+        font-size="5" fill="#3b82f6">POS</text>
+</svg>

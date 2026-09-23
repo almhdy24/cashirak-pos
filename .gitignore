@@ -12,6 +12,11 @@ storage/sessions/*
 storage/logs/*
 !storage/logs/.gitkeep
 
+# Runtime storage files (device-specific, not for VCS)
+storage/.device_id
+storage/.license_data
+storage/installed.lock
+
 # Configuration with sensitive data
 config.json
 

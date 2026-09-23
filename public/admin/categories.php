@@ -1,139 +1,14 @@
 <?php
-require_once __DIR__.'/../../app/helpers.php';
+require_once __DIR__ . '/../../bootstrap.php';
 use Middleware\AuthMiddleware;
 use Models\Category;
-use Core\Auth;
 use Core\Security;
 
 AuthMiddleware::handle('manage_items');
 
-$user = Auth::user();
 $categories = Category::all();
 $csrf = Security::generateCSRFToken();
 
-$pageTitle = 'إدارة التصنيفات - Cashirak V2';
-include __DIR__.'/../../views/partials/header.php';
-?>
-
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2><i class="bi bi-tags"></i> إدارة التصنيفات</h2>
-        <div>
-            <a href="../admin.php" class="btn btn-outline-secondary"><i class="bi bi-arrow-right"></i> العودة للوحة التحكم</a>
-            <a href="../logout.php" class="btn btn-outline-danger"><i class="bi bi-box-arrow-right"></i> خروج</a>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5>قائمة التصنيفات</h5>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                <i class="bi bi-plus-circle"></i> إضافة تصنيف
-            </button>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>الاسم</th>
-                        <th>الوصف</th>
-                        <th>عدد الأصناف</th>
-                        <th>إجراءات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach($categories as $cat): ?>
-                    <tr>
-                        <td><?= $cat['id'] ?></td>
-                        <td><?= htmlspecialchars($cat['name']) ?></td>
-                        <td><?= htmlspecialchars($cat['description'] ?? '') ?></td>
-                        <td><?= Category::getItemsCount($cat['id']) ?></td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-warning" onclick="editCategory(<?= $cat['id'] ?>, '<?= htmlspecialchars($cat['name']) ?>', '<?= htmlspecialchars($cat['description'] ?? '') ?>')">
-                                <i class="bi bi-pencil"></i> تعديل
-                            </button>
-                            <form method="post" style="display:inline;" onsubmit="return confirm('حذف التصنيف؟ الأصناف المرتبطة ستصبح بدون تصنيف.')">
-                                <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
-                                <input type="hidden" name="action" value="delete">
-                                <input type="hidden" name="id" value="<?= $cat['id'] ?>">
-                                <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i> حذف</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Modal إضافة تصنيف -->
-<div class="modal fade" id="addCategoryModal" tabindex="-1">
-    <div class="modal-dialog">
-        <form method="post" class="modal-content">
-            <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
-            <input type="hidden" name="action" value="add">
-            <div class="modal-header">
-                <h5>إضافة تصنيف جديد</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label>الاسم</label>
-                    <input type="text" name="name" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>الوصف (اختياري)</label>
-                    <textarea name="description" class="form-control"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success">حفظ</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- Modal تعديل -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1">
-    <div class="modal-dialog">
-        <form method="post" class="modal-content">
-            <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
-            <input type="hidden" name="action" value="update">
-            <input type="hidden" name="id" id="edit-id">
-            <div class="modal-header">
-                <h5>تعديل التصنيف</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label>الاسم</label>
-                    <input type="text" name="name" id="edit-name" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label>الوصف</label>
-                    <textarea name="description" id="edit-description" class="form-control"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-warning">تحديث</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-function editCategory(id, name, desc) {
-    document.getElementById('edit-id').value = id;
-    document.getElementById('edit-name').value = name;
-    document.getElementById('edit-description').value = desc;
-    new bootstrap.Modal(document.getElementById('editCategoryModal')).show();
-}
-</script>
-
-<?php
-// معالجة النماذج
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!Security::validateCSRFToken($_POST['csrf_token'])) die('Invalid CSRF');
     $action = $_POST['action'] ?? '';
@@ -147,4 +22,135 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: categories.php');
     exit;
 }
-include __DIR__.'/../../views/partials/footer.php';
+
+$pageTitle = getSetting('cafe_title', 'كاشيراك') . ' - إدارة التصنيفات';
+include __DIR__.'/../../views/partials/header.php';
+?>
+
+<div class="page-header">
+    <h2><i class="bi bi-tags"></i> إدارة التصنيفات</h2>
+    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+        <i class="bi bi-plus-circle"></i> إضافة تصنيف
+    </button>
+</div>
+
+<div class="card" style="max-width:700px;">
+    <div class="card-body p-0 table-responsive">
+        <?php if (empty($categories)): ?>
+        <div class="empty-state">
+            <i class="bi bi-tags"></i>
+            <p>لا توجد تصنيفات — أضف تصنيفاً للبدء</p>
+        </div>
+        <?php else: ?>
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>الاسم</th>
+                    <th>الوصف</th>
+                    <th class="text-center">الأصناف</th>
+                    <th width="110">إجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($categories as $cat): ?>
+                <tr>
+                    <td class="fw-semibold"><?= htmlspecialchars($cat['name']) ?></td>
+                    <td class="text-muted small"><?= htmlspecialchars($cat['description'] ?? '—') ?></td>
+                    <td class="text-center">
+                        <span class="badge bg-secondary rounded-pill"><?= Category::getItemsCount($cat['id']) ?></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-warning edit-cat-btn"
+                                data-id="<?= $cat['id'] ?>"
+                                data-name="<?= htmlspecialchars($cat['name']) ?>"
+                                data-desc="<?= htmlspecialchars($cat['description'] ?? '') ?>"
+                                title="تعديل">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <form method="post" style="display:inline;"
+                              data-confirm="حذف تصنيف «<?= htmlspecialchars($cat['name']) ?>»؟ الأصناف المرتبطة ستصبح بدون تصنيف.">
+                            <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="id" value="<?= $cat['id'] ?>">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" title="حذف">
+                                <i class="bi bi-trash3"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endif; ?>
+    </div>
+</div>
+
+<!-- Add modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" class="modal-content">
+            <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+            <input type="hidden" name="action" value="add">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-plus-circle"></i> إضافة تصنيف جديد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">الاسم <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">الوصف (اختياري)</label>
+                    <textarea name="description" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="submit" class="btn btn-success">حفظ</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit modal -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <form method="post" class="modal-content">
+            <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="id" id="edit-id">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-pencil"></i> تعديل التصنيف</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">الاسم <span class="text-danger">*</span></label>
+                    <input type="text" name="name" id="edit-name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">الوصف</label>
+                    <textarea name="description" id="edit-description" class="form-control" rows="2"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="submit" class="btn btn-warning"><i class="bi bi-save"></i> تحديث</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php include __DIR__.'/../../views/partials/footer.php'; ?>
+
+<script>
+document.querySelectorAll('.edit-cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.getElementById('edit-id').value          = btn.dataset.id;
+        document.getElementById('edit-name').value        = btn.dataset.name;
+        document.getElementById('edit-description').value = btn.dataset.desc;
+        new bootstrap.Modal(document.getElementById('editCategoryModal')).show();
+    });
+});
+</script>

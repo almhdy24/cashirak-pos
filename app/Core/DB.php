@@ -6,8 +6,12 @@ class DB {
 
     public static function conn(): \PDO {
         if (self::$instance === null) {
-            if (!is_dir(__DIR__.'/../../database')) mkdir(__DIR__.'/../../database', 0777, true);
-            self::$instance = new \PDO('sqlite:'.__DIR__.'/../../database/cashirak.sqlite');
+            // Use DB_PATH constant when available (set by bootstrap or paths.php).
+            // Fall back to relative path only if neither has loaded yet (e.g. direct script).
+            $dbPath = defined('DB_PATH') ? DB_PATH : __DIR__ . '/../../database/cashirak.sqlite';
+            $dbDir  = dirname($dbPath);
+            if (!is_dir($dbDir)) mkdir($dbDir, 0777, true);
+            self::$instance = new \PDO('sqlite:' . $dbPath);
             self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             self::$instance->exec("PRAGMA foreign_keys = ON;");
         }
