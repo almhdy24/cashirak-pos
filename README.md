@@ -123,7 +123,7 @@ Raw, unframed screenshots of every screen are in [`docs/screenshots/`](docs/scre
 - **Opening cash** (the float in the drawer) is entered on the admin dashboard.
 - **Shift expenses** (ice, bread, gas…) recorded during the shift.
 - **Shift close with reconciliation**: payment-method breakdown, best sellers, expected cash
-  (`opening cash + cash sales − expenses`) vs. **counted cash**, difference and a note.
+  (`opening cash + cash sales − expenses − cash refunds`) vs. **counted cash**, difference and a note.
 - **Shift history** and a **detailed report per shift** (duration, totals, average ticket, payment breakdown, best sellers).
 
 ### 📦 Menu & inventory
@@ -211,7 +211,7 @@ stateDiagram-v2
     Closed --> [*]: visible in shift history & reports
 ```
 
-Expected cash at close = **opening cash + cash sales − shift expenses**. The admin types the counted
+Expected cash at close = **opening cash + cash sales − shift expenses − cash refunds**. The admin types the counted
 amount; the difference (shortage / surplus) is saved with the shift.
 
 ### Data model

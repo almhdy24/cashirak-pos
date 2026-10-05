@@ -51,14 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $expStmt->execute([$shift_id]);
     $total_expenses = (float)$expStmt->fetchColumn();
 
+    // Cash refunds (returns paid back in cash) leave the drawer too
+    $refStmt = $db->prepare("SELECT COALESCE(SUM(total_refund),0) FROM returns WHERE shift_id = ? AND payment_method = 'كاش'");
+    $refStmt->execute([$shift_id]);
+    $cash_refunds = (float)$refStmt->fetchColumn();
+
     $opening_cash  = (float)($shift['opening_cash'] ?? 0);
-    $expected_cash = $opening_cash + $cash_sales - $total_expenses;
+    $expected_cash = $opening_cash + $cash_sales - $total_expenses - $cash_refunds;
     $difference    = $actual_cash - $expected_cash;
 
     Shift::closeWithReconciliation($shift_id, $actual_cash, $close_note, $total_sales, $total_orders);
 
     $closed = true;
-    $closeData = compact('opening_cash', 'cash_sales', 'total_expenses', 'expected_cash', 'actual_cash', 'difference', 'total_sales', 'total_orders');
+    $closeData = compact('opening_cash', 'cash_sales', 'total_expenses', 'cash_refunds', 'expected_cash', 'actual_cash', 'difference', 'total_sales', 'total_orders');
 }
 
 // ── Compute preview data (for GET or on POST success display) ────────────────
@@ -82,6 +87,11 @@ if (!$closed) {
     $expStmt->execute([$shift_id]);
     $total_expenses = (float)$expStmt->fetchColumn();
 
+    // Cash refunds (returns paid back in cash) leave the drawer too
+    $refStmt = $db->prepare("SELECT COALESCE(SUM(total_refund),0) FROM returns WHERE shift_id = ? AND payment_method = 'كاش'");
+    $refStmt->execute([$shift_id]);
+    $cash_refunds = (float)$refStmt->fetchColumn();
+
     // Best sellers
     $best = OrderItem::bestSellers($shift_id);
 
@@ -91,7 +101,7 @@ if (!$closed) {
     $statsRow = $statsRow->fetch(\PDO::FETCH_ASSOC);
 
     $opening_cash  = (float)($shift['opening_cash'] ?? 0);
-    $expected_cash = $opening_cash + $cash_sales - $total_expenses;
+    $expected_cash = $opening_cash + $cash_sales - $total_expenses - $cash_refunds;
 }
 
 $csrf      = Security::generateCSRFToken();
@@ -135,6 +145,10 @@ include __DIR__ . '/../views/partials/header.php';
                 <li class="list-group-item d-flex justify-content-between">
                     <span>إجمالي المصروفات</span>
                     <strong class="text-danger"><?= number_format($closeData['total_expenses'], 2) ?> <?= htmlspecialchars($currency) ?></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>مرتجعات كاش</span>
+                    <strong class="text-danger"><?= number_format($closeData['cash_refunds'], 2) ?> <?= htmlspecialchars($currency) ?></strong>
                 </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <span><strong>الكاش المتوقع</strong></span>
@@ -185,6 +199,10 @@ include __DIR__ . '/../views/partials/header.php';
                 <li class="list-group-item d-flex justify-content-between">
                     <span>إجمالي المصروفات</span>
                     <strong class="text-danger"><?= number_format($total_expenses, 2) ?> <?= htmlspecialchars($currency) ?></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>مرتجعات كاش</span>
+                    <strong class="text-danger"><?= number_format($cash_refunds, 2) ?> <?= htmlspecialchars($currency) ?></strong>
                 </li>
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <span><strong>الكاش المتوقع</strong></span>
