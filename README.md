@@ -114,12 +114,13 @@ Raw, unframed screenshots of every screen are in [`docs/screenshots/`](docs/scre
 
 ### 🧾 Receipts, history & returns
 - Printable receipt with shop name, date/time, receipt number, payment method, lines, total and a custom footer.
-- **Shift order history** with reprint and **cancel** (a cancelled order is removed from the totals and recorded in the audit log).
+- **Shift order history** with reprint; admins can **cancel** an order (removed from the totals and recorded in the audit log).
 - **Returns**: look up an order, choose which items/quantities to return, the reason and the refund method.
   Each order can be returned once; quantities can't exceed what was sold.
 
 ### 💵 Shifts & cash drawer
 - A shift opens automatically with the first login/sale; every order belongs to a shift.
+- **Opening cash** (the float in the drawer) is entered on the admin dashboard.
 - **Shift expenses** (ice, bread, gas…) recorded during the shift.
 - **Shift close with reconciliation**: payment-method breakdown, best sellers, expected cash
   (`opening cash + cash sales − expenses`) vs. **counted cash**, difference and a note.
@@ -306,7 +307,6 @@ so updates and reinstalls never touch your sales.
 ```bash
 git clone https://github.com/almhdy24/cashirak-pos.git
 cd cashirak-pos
-mkdir -p storage/logs storage/sessions storage/backups database   # data folders (start.bat does this on Windows)
 php -S 127.0.0.1:8000 -t public
 ```
 
@@ -344,7 +344,7 @@ needs the internet again.
 4. Use **الفواتير** (history) to reprint, and **المرتجعات** (returns) for a refund.
 
 **Admin / owner**
-1. **لوحة التحكم** — live shift totals, items, stock and best sellers; add / edit items.
+1. **لوحة التحكم** — enter the shift's opening cash; live shift totals, items, stock and best sellers; add / edit items.
 2. **المصروفات** — record expenses during the shift.
 3. **التقارير** — today, last 7 days, payment methods, stock alerts, any date range.
 4. **إغلاق الوردية** — review the summary, type the counted cash, add a note, close. A new shift starts with the next sale.
@@ -356,7 +356,8 @@ needs the internet again.
 
 | Capability | Cashier (`process_order`) | Admin (`manage_items` / role admin) |
 |---|:---:|:---:|
-| Sell, print, history, returns, cancel an order | ✅ | ✅ |
+| Sell, print, history, returns | ✅ | ✅ |
+| Cancel an order | — | ✅ |
 | Items, categories, payment methods, stock | — | ✅ |
 | Expenses, reports, shift close & history | — | ✅ |
 | Users, settings, backup / restore | — | ✅ |

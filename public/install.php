@@ -7,6 +7,12 @@ require_once __DIR__ . '/../app/Core/DB.php';
 require_once __DIR__ . '/../app/Core/Security.php';
 require_once __DIR__ . '/../app/Core/Installer.php';
 
+// Create the data folders on first run (start.bat does this on Windows; Linux/macOS need it here)
+foreach ([STORAGE_PATH, STORAGE_PATH . '/logs', STORAGE_PATH . '/sessions', STORAGE_PATH . '/backups', dirname(DB_PATH)] as $_dir) {
+    if (!is_dir($_dir)) @mkdir($_dir, 0777, true);
+}
+unset($_dir);
+
 use Core\Installer;
 
 // Already installed + licensed → login

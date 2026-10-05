@@ -12,6 +12,10 @@ storage/sessions/*
 storage/logs/*
 !storage/logs/.gitkeep
 
+# Backups
+storage/backups/*
+!storage/backups/.gitkeep
+
 # Runtime storage files (device-specific, not for VCS)
 storage/.device_id
 storage/.license_data
