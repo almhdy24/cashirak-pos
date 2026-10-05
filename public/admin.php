@@ -19,12 +19,22 @@ $items    = Item::all();
 $cats     = Category::all();
 $csrf     = Security::generateCSRFToken();
 $currency = getSetting('currency', 'SDG');
+$openingCash = (float)(Shift::getById($shift_id)['opening_cash'] ?? 0);
 
 $error   = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!Security::validateCSRFToken($_POST['csrf_token'] ?? '')) die('CSRF غير صحيح');
+
+    // Opening cash for the active shift (used by the shift-close reconciliation)
+    if (isset($_POST['set_opening_cash'])) {
+        $amount = (float)($_POST['opening_cash'] ?? 0);
+        $ok = $amount >= 0;
+        if ($ok) Shift::setOpeningCash((int)$shift_id, $amount);
+        header('Location: admin.php' . ($ok ? '?ok=1' : '?err=1'));
+        exit;
+    }
 
     $barcode    = trim($_POST['barcode']    ?? '');
     $cat_id     = !empty($_POST['category_id']) ? (int)$_POST['category_id'] : null;
@@ -110,6 +120,31 @@ include __DIR__ . '/../views/partials/header.php';
                 <div class="stat-sub"><?= htmlspecialchars($currency) ?></div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Opening cash -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="post" class="row g-2 align-items-end">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf) ?>">
+            <div class="col-md-5">
+                <label class="form-label mb-1"><i class="bi bi-safe2"></i> رصيد افتتاح الوردية #<?= $shift_id ?></label>
+                <div class="input-group">
+                    <input type="number" name="opening_cash" class="form-control" min="0" step="1"
+                           value="<?= htmlspecialchars((string)(int)$openingCash) ?>" required>
+                    <span class="input-group-text"><?= htmlspecialchars($currency) ?></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" name="set_opening_cash" class="btn btn-outline-primary w-100">
+                    <i class="bi bi-check2"></i> حفظ
+                </button>
+            </div>
+            <div class="col-md-5 text-muted small">
+                المبلغ الموجود في الدرج عند بداية الوردية — يُضاف إلى الكاش المتوقع عند إغلاق الوردية.
+            </div>
+        </form>
     </div>
 </div>
 

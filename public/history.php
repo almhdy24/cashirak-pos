@@ -24,8 +24,14 @@ $stmt->execute([$shift_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $message = '';
+$canCancel = Auth::hasPermission('manage_items');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order'])) {
     if (!Security::validateCSRFToken($_POST['csrf_token'] ?? '')) die('Invalid CSRF');
+    if (!$canCancel) {
+        http_response_code(403);
+        die('إلغاء الطلبات متاح للمدير فقط');
+    }
     $order_id = (int)$_POST['order_id'];
     try {
         OrderService::cancelOrder($order_id, $user['id']);
@@ -101,6 +107,7 @@ include __DIR__.'/../views/partials/header.php';
                         <button class="btn btn-sm btn-outline-secondary" onclick="printReceipt(<?= $order['id'] ?>)" title="طباعة">
                             <i class="bi bi-printer"></i>
                         </button>
+                        <?php if ($canCancel): ?>
                         <form method="post" style="display:inline;"
                               data-confirm="إلغاء الطلب #<?= $order['id'] ?>؟ سيتم خصم قيمته من الوردية.">
                             <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
@@ -109,6 +116,7 @@ include __DIR__.'/../views/partials/header.php';
                                 <i class="bi bi-x-circle"></i>
                             </button>
                         </form>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; endif; ?>

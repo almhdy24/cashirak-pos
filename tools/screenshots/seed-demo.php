@@ -123,7 +123,7 @@ $expenseIdeas = [['ثلج', 3000], ['خبز للسندويتشات', 6000], ['غ
 
 /** One shift with $count orders starting at $start; closed shifts are reconciled. */
 $makeShift = function (int $start, int $count, bool $open) use ($db, $insShift, $insOrder, $insLine, $insAudit, $insExp, $pool, $prices, $payPool, $pick, $at, $expenseIdeas, $adminId, $cashierId, $saraId) {
-    $openingCash = 0; // the UI has no opening-cash input yet, so keep demo data realistic
+    $openingCash = $pick([10000, 15000, 20000]);
     $insShift->execute([$at($start), $open ? null : $at($start + 9 * 3600), $open ? 'open' : 'closed', $adminId, $openingCash]);
     $shiftId = (int)$db->lastInsertId();
     $cashier = $open ? $cashierId : $pick([$cashierId, $saraId]);
