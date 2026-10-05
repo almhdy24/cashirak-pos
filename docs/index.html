@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>كاشيراك POS — نظام نقاط بيع يعمل بدون إنترنت</title>
+<meta name="description" content="كاشيراك POS: نظام كاشير عربي للمطاعم والكافيهات والبقالات — يعمل بدون إنترنت، باركود ومخزون، ورديات ومطابقة الدرج، تقارير ومرتجعات.">
+<meta property="og:title" content="كاشيراك POS — Cashirak POS">
+<meta property="og:description" content="Offline-first point of sale for restaurants, cafés and groceries.">
+<meta property="og:image" content="showcase/social-preview.png">
+<link rel="icon" href="assets/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f1f5f9; --surface: #fff; --text: #0f172a; --muted: #64748b; --line: #e2e8f0;
+    --navy: #0f172a; --blue: #2563eb; --green: #16a34a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0b1224; --surface: #111a2e; --text: #e2e8f0; --muted: #94a3b8; --line: #1e293b; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Cairo, Tahoma, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+  a { color: var(--blue); }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  header.hero { background: linear-gradient(135deg, #0b1224, #0f172a 45%, #1e3a8a); color: #fff; padding: 56px 0 0; overflow: hidden; }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin: 0; font-weight: 800; }
+  .hero h1 span { background: linear-gradient(90deg, #34d399, #60a5fa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { font-size: 1.2rem; color: #dbeafe; max-width: 720px; margin: 10px 0 0; }
+  .hero .en { direction: ltr; text-align: right; color: #93c5fd; font-size: 1rem; }
+  .brand { display: inline-flex; gap: 10px; align-items: center; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 999px; padding: 4px 16px 4px 6px; font-weight: 700; margin-bottom: 18px; }
+  .brand img { width: 32px; height: 32px; border-radius: 8px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 34px; }
+  .btn { display: inline-block; padding: 12px 22px; border-radius: 12px; font-weight: 700; text-decoration: none; }
+  .btn.primary { background: var(--green); color: #fff; }
+  .btn.ghost { border: 1px solid rgba(255,255,255,.3); color: #fff; }
+  .hero img.banner { display: block; width: 100%; border-radius: 18px 18px 0 0; box-shadow: 0 -10px 60px rgba(0,0,0,.35); }
+  section { padding: 56px 0; }
+  h2 { font-size: 1.9rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .card .ic { font-size: 1.6rem; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+  .gallery figure { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; cursor: zoom-in; }
+  .gallery img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .gallery figcaption { padding: 10px 14px; font-weight: 700; }
+  .gallery figcaption small { display: block; color: var(--muted); font-weight: 400; direction: ltr; text-align: right; }
+  .wide img { aspect-ratio: auto; }
+  .lightbox { position: fixed; inset: 0; background: rgba(2,6,23,.92); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 10; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 100%; max-height: 100%; border-radius: 10px; }
+  footer { text-align: center; color: var(--muted); padding: 30px 0 40px; font-size: .9rem; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand"><img src="assets/icon.svg" alt="">كاشيراك POS</div>
+    <h1>كاشيراك <span>POS</span></h1>
+    <p>نظام نقاط بيع متكامل للمطاعم والكافيهات والبقالات — يعمل بالكامل بدون إنترنت، على أي جهاز ويندوز ولو قديم.</p>
+    <p class="en">Offline-first point of sale for restaurants, cafés, groceries and kiosks.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://almhdy24.com">احصل على كاشيراك</a>
+      <a class="btn ghost" href="https://github.com/almhdy24/cashirak-pos">GitHub</a>
+    </div>
+    <img class="banner" src="showcase/webp/hero.webp" alt="كاشيراك — شاشة الكاشير ولوحة التحكم">
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>كل ما يحتاجه محلك</h2>
+    <p class="sub">Everything a small shop needs — in one offline app.</p>
+    <div class="features">
+      <div class="card"><div class="ic">📴</div><h3>بدون إنترنت</h3><p>كل البيانات على جهازك. قطوعات الإنترنت والكهرباء لا توقف البيع.</p></div>
+      <div class="card"><div class="ic">🛒</div><h3>بيع سريع باللمس</h3><p>أزرار كبيرة، تصنيفات، بحث فوري، الأكثر مبيعاً، وطباعة بضغطة.</p></div>
+      <div class="card"><div class="ic">💳</div><h3>كل طرق الدفع</h3><p>كاش، بنكك، ماي كاشي، تحويل بنكي — أو أضف طرقك.</p></div>
+      <div class="card"><div class="ic">🔎</div><h3>باركود ومخزون</h3><p>قارئ باركود، سعر التكلفة، خصم المخزون وتنبيهات النفاد.</p></div>
+      <div class="card"><div class="ic">💵</div><h3>ورديات ومطابقة الدرج</h3><p>مصروفات الوردية، الكاش المتوقع مقابل الفعلي، والفرق.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>تقارير ومرتجعات</h3><p>اليوم، آخر 7 أيام، أي فترة، وإرجاع جزئي أو كامل.</p></div>
+      <div class="card"><div class="ic">👥</div><h3>مستخدمون وصلاحيات</h3><p>مدير وكاشير بصلاحيات منفصلة وسجل تدقيق.</p></div>
+      <div class="card"><div class="ic">💾</div><h3>نسخ احتياطي</h3><p>تنزيل واستعادة قاعدة البيانات بضغطة، مع نسخة أمان.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>جولة في النظام</h2>
+    <p class="sub">A tour of the app — click any image to enlarge.</p>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<footer>
+  كاشيراك POS v1.0.0 · <a href="https://almhdy24.com">Elmahdi Dev</a> · صُنع في السودان 🇸🇩
+</footer>
+
+<div class="lightbox" id="lightbox"><img alt=""></div>
+
+<script>
+  const shots = [
+    ['pos-cart', 'شاشة البيع', 'Cashier screen'],
+    ['admin-dashboard', 'لوحة التحكم', 'Admin dashboard'],
+    ['admin-reports', 'تقارير المبيعات', 'Sales reports'],
+    ['shift-close', 'إغلاق الوردية ومطابقة الدرج', 'Shift close & cash reconciliation'],
+    ['receipt', 'الفاتورة المطبوعة', 'Printed receipt'],
+    ['devices', 'على التابلت والجوال', 'Tablet & phone'],
+    ['pos-barcode', 'قارئ الباركود', 'Barcode scanning'],
+    ['returns', 'المرتجعات', 'Returns'],
+    ['history', 'سجل الفواتير', 'Order history'],
+    ['admin-expenses', 'المصروفات', 'Shift expenses'],
+    ['admin-shift-history', 'تاريخ الورديات', 'Shift history'],
+    ['admin-shift-details', 'تقرير وردية مفصّل', 'Shift report'],
+    ['admin-add-item', 'الأصناف والمخزون', 'Items & stock'],
+    ['admin-payment-methods', 'طرق الدفع', 'Payment methods'],
+    ['admin-users', 'المستخدمون والصلاحيات', 'Users & permissions'],
+    ['admin-settings', 'الإعدادات', 'Settings'],
+    ['admin-backup', 'النسخ الاحتياطي', 'Backup & restore'],
+    ['setup-1-shop', 'معالج التثبيت', 'Setup wizard'],
+  ];
+  const g = document.getElementById('gallery');
+  g.innerHTML = shots.map(([f, ar, en]) =>
+    `<figure data-full="showcase/${f}.png"><img loading="lazy" src="showcase/webp/${f}.webp" alt="${ar}"><figcaption>${ar}<small>${en}</small></figcaption></figure>`
+  ).join('');
+  const lb = document.getElementById('lightbox');
+  g.addEventListener('click', (e) => {
+    const fig = e.target.closest('figure');
+    if (!fig) return;
+    lb.querySelector('img').src = fig.dataset.full;
+    lb.classList.add('open');
+  });
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lb.classList.remove('open'); });
+</script>
+</body>
+</html>

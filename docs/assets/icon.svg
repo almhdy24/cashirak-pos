@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#0c1a3a"/>
+    </linearGradient>
+    <linearGradient id="receipt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- App icon background — rounded square -->
+  <rect width="256" height="256" rx="54" ry="54" fill="url(#bg)"/>
+
+  <!-- Subtle inner shadow at top -->
+  <rect width="256" height="60" rx="54" ry="54" fill="#ffffff" opacity="0.04"/>
+
+  <!-- ── POS Monitor body ── -->
+  <rect x="36" y="52" width="184" height="128" rx="14" fill="#ffffff" opacity="0.95"/>
+
+  <!-- Monitor screen -->
+  <rect x="50" y="64" width="156" height="100" rx="8" fill="url(#screen)"/>
+
+  <!-- Screen glow accent line at top -->
+  <rect x="50" y="64" width="156" height="3" rx="2" fill="#3b82f6" opacity="0.7"/>
+
+  <!-- Receipt on screen -->
+  <g transform="translate(128, 114)">
+    <!-- Receipt paper -->
+    <rect x="-28" y="-36" width="56" height="70" rx="3" fill="url(#receipt)"/>
+    <!-- Jagged top edge -->
+    <polyline
+      points="-28,-36 -22,-43 -16,-36 -10,-43 -4,-36 2,-43 8,-36 14,-43 20,-36 28,-36"
+      fill="#e2e8f0" stroke="none"/>
+    <!-- Receipt content lines -->
+    <line x1="-20" y1="-26" x2="20"  y2="-26" stroke="#94a3b8" stroke-width="4"  stroke-linecap="round"/>
+    <line x1="-20" y1="-16" x2="10"  y2="-16" stroke="#cbd5e1" stroke-width="3"  stroke-linecap="round"/>
+    <line x1="-20" y1="-8"  x2="14"  y2="-8"  stroke="#cbd5e1" stroke-width="3"  stroke-linecap="round"/>
+    <line x1="-20" y1="0"   x2="8"   y2="0"   stroke="#cbd5e1" stroke-width="3"  stroke-linecap="round"/>
+    <!-- Separator -->
+    <line x1="-20" y1="10"  x2="20"  y2="10"  stroke="#e2e8f0" stroke-width="1.5"/>
+    <!-- Total highlight -->
+    <rect x="-20" y="16" width="40" height="10" rx="2" fill="#2563eb" opacity="0.15"/>
+    <line x1="-14" y1="21" x2="14"  y2="21"  stroke="#2563eb" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- ── Monitor stand ── -->
+  <rect x="110" y="180" width="36" height="14" rx="4" fill="#dbeafe" opacity="0.9"/>
+  <rect x="84"  y="193" width="88" height="10" rx="5" fill="#bfdbfe" opacity="0.9"/>
+
+  <!-- ── Keyboard strip ── -->
+  <rect x="48" y="205" width="160" height="22" rx="6" fill="#dbeafe" opacity="0.85"/>
+  <!-- Key clusters -->
+  <g fill="#93c5fd">
+    <rect x="58"  y="211" width="14" height="9" rx="2"/>
+    <rect x="76"  y="211" width="14" height="9" rx="2"/>
+    <rect x="94"  y="211" width="14" height="9" rx="2"/>
+    <rect x="112" y="211" width="32" height="9" rx="2"/>
+    <rect x="148" y="211" width="14" height="9" rx="2"/>
+    <rect x="166" y="211" width="14" height="9" rx="2"/>
+    <rect x="184" y="211" width="14" height="9" rx="2"/>
+  </g>
+
+  <!-- ── Power / status LED dot ── -->
+  <circle cx="220" cy="170" r="5" fill="#34d399" opacity="0.9"/>
+</svg>
