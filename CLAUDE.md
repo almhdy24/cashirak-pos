@@ -46,7 +46,7 @@ public/*.php (controller/page file)
 - `app/Middleware/` — auth + CSRF validation
 - `public/*.php` — page/controller files; there is no router
 - `views/partials/` — shared `header.php` / `footer.php` included by pages
-- `storage/cashirak.sqlite` — the only database; all state lives here
+- `database/cashirak.sqlite` (under `DATA_PATH`) — the only database; all state lives here
 
 ## Key Patterns
 
@@ -72,7 +72,7 @@ index.php (JS cart) → AJAX POST → order.php → OrderService::processOrder()
 
 ## Database
 
-SQLite only (`storage/cashirak.sqlite`). Main tables: `users`, `items`, `categories`, `orders`, `order_items`, `shifts`, `settings`, `audit_logs`. Schema created by `Installer::createTables()`.
+SQLite only (`DATA_PATH/database/cashirak.sqlite`). Main tables: `users`, `items`, `categories`, `orders`, `order_items`, `shifts`, `settings`, `audit_logs`. Schema created by `Installer::createTables()`.
 
 ## License System
 
@@ -94,5 +94,11 @@ Bootstrap 5 RTL (`bootstrap.rtl.min.css`) — Arabic is the primary language. Va
 | Order API endpoint | `public/order.php` |
 | Admin panel | `public/admin.php` |
 | Shared header/footer | `views/partials/` |
-| SQLite DB file | `storage/cashirak.sqlite` |
+| SQLite DB file | `database/cashirak.sqlite` (under `DATA_PATH`) |
 | License cache | `storage/.license_data` |
+
+## Screenshots & Docs Images
+
+`docs/screenshots/` (raw) and `docs/showcase/` (framed + WebP) are generated — don't edit by hand.
+Regenerate with `bash tools/screenshots/build.sh` (needs node + playwright, ImageMagick). It runs on a temp copy
+with demo data from `tools/screenshots/seed-demo.php`, so the real database and license are never touched.
